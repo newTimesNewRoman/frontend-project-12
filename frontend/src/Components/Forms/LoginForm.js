@@ -1,41 +1,71 @@
+/* eslint-disable functional/no-conditional-statements */
+/* eslint-disable functional/no-expression-statements */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
-  Formik, Form, Field, ErrorMessage,
+  Formik, Field, Form, ErrorMessage,
 } from 'formik';
 import * as Yup from 'yup';
+import { Container, Form as BootstrapForm, Button } from 'react-bootstrap';
+import axios from 'axios';
 
-const LoginForm = () => (
-  <div>
-    <h1>Авторизация</h1>
-    <Formik
-      initialValues={{ username: '', password: '' }}
-      validationSchema={Yup.object({
-        username: Yup.string()
-          .max(15, 'Не более 15 символов')
-          .required('Обязательное поле'),
-        password: Yup.string()
-          .min(8, 'Не менее 8 символов')
-          .required('Обязательное поле'),
-      })}
-    >
-      {({ isSubmitting }) => (
-        <Form>
-          <label htmlFor="username">Имя пользователя</label>
-          <Field type="text" name="username" />
-          <ErrorMessage name="username" />
+const LoginForm = () => {
+  const navigate = useNavigate();
 
-          <label htmlFor="password">Пароль</label>
-          <Field type="password" name="password" />
-          <ErrorMessage name="password" />
+  const handleSubmit = async (values, { setSubmitting, setFieldError }) => {
+    try {
+      const response = await axios.post('/api/v1/login', values);
+      const { token } = response.data;
+      localStorage.setItem('token', token);
+      navigate('/');
+    } catch (error) {
+      const status = error.response?.status;
+      if (status === 401) {
+        setFieldError('password', 'Ошибка авторизации');
+      } else {
+        setFieldError('password', 'Что-то пошло не так');
+      }
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
-          <button type="submit" disabled={isSubmitting}>
-            Войти
-          </button>
-        </Form>
-      )}
-    </Formik>
-  </div>
-);
+  const validationSchema = Yup.object().shape({
+    username: Yup.string().required('Введите имя пользователя'),
+    password: Yup.string().required('Введите пароль'),
+  });
+
+  return (
+    <Container>
+      <h1>Авторизация</h1>
+      <Formik
+        initialValues={{ username: '', password: '' }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ isSubmitting }) => (
+          <Form as={BootstrapForm}>
+            <BootstrapForm.Group controlId="username">
+              <BootstrapForm.Label>Имя пользователя</BootstrapForm.Label>
+              <Field type="text" name="username" as={BootstrapForm.Control} />
+              <ErrorMessage name="username" component={BootstrapForm.Text} className="text-danger" />
+            </BootstrapForm.Group>
+
+            <BootstrapForm.Group controlId="password">
+              <BootstrapForm.Label>Пароль</BootstrapForm.Label>
+              <Field type="password" name="password" as={BootstrapForm.Control} />
+              <ErrorMessage name="password" component={BootstrapForm.Text} className="text-danger" />
+            </BootstrapForm.Group>
+
+            <Button type="submit" disabled={isSubmitting}>
+              Войти
+            </Button>
+          </Form>
+        )}
+      </Formik>
+    </Container>
+  );
+};
 
 export default LoginForm;
