@@ -37,7 +37,7 @@ const LoginForm = () => {
   });
 
   return (
-    <Container>
+    <Container className="col-6">
       <h1>Авторизация</h1>
       <Formik
         initialValues={{ username: '', password: '' }}
