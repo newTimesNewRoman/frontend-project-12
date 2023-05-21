@@ -10,6 +10,7 @@ import HomePage from './HomePage';
 import NotFoundPage from './NotFoundPage';
 import LoginPage from './LoginPage';
 import NavBar from './NavBar';
+import RegistrationPage from './RegistrationPage';
 
 import { AuthContext } from '../contexts';
 
@@ -50,6 +51,7 @@ const App = () => (
         <Routes>
           <Route exact path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<RegistrationPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
