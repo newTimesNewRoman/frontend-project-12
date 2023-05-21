@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 
 import Channels from './Channels';
 import Chat from './Chat';
+import Modals from '../Modals';
 
 import { actions } from '../../slices';
 import { useAuth } from '../../hooks';
@@ -52,20 +53,23 @@ const HomePage = () => {
       </Spinner>
     </div>
   ) : (
-    <Container className="h-100 my-4 overflow-hidden rounded shadow">
-      <Row className="h-100 bg-white flex-md-row">
-        <Col
-          className="border-end px-0 bg-light flex-column h-100 d-flex"
-          xs="4"
-          md="2"
-        >
-          <Channels />
-        </Col>
-        <Col className="p-0 h-100">
-          <Chat />
-        </Col>
-      </Row>
-    </Container>
+    <>
+      <Container className="h-100 my-4 overflow-hidden rounded shadow">
+        <Row className="h-100 bg-white flex-md-row">
+          <Col
+            className="border-end px-0 bg-light flex-column h-100 d-flex"
+            xs="4"
+            md="2"
+          >
+            <Channels />
+          </Col>
+          <Col className="p-0 h-100">
+            <Chat />
+          </Col>
+        </Row>
+      </Container>
+      <Modals />
+    </>
   );
 };
 

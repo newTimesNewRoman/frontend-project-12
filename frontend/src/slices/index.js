@@ -9,10 +9,12 @@ import messages, {
   actions as messagesActions,
   selectors as messagesSelectors,
 } from './messages';
+import modals, { actions as modalsActions } from './modals';
 
 const actions = {
   ...channelsActions,
   ...messagesActions,
+  ...modalsActions,
 };
 
 const selectors = {
@@ -25,4 +27,5 @@ export { actions, defaultChannelId, selectors };
 export default combineReducers({
   channels,
   messages,
+  modals,
 });
