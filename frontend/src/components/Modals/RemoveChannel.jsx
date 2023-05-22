@@ -3,6 +3,7 @@
 import { Button, Modal } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useApi } from '../../hooks';
 
@@ -10,6 +11,7 @@ const RemoveChannel = ({ handleClose }) => {
   const { removeChannel } = useApi();
   const [loading, setLoading] = useState(false);
   const { channelId } = useSelector((state) => state.modals.extra);
+  const { t } = useTranslation();
 
   const handleRemove = async () => {
     setLoading(true);
@@ -33,17 +35,17 @@ const RemoveChannel = ({ handleClose }) => {
   return (
     <>
       <Modal.Header>
-        <Modal.Title>Удалить</Modal.Title>
+        <Modal.Title>{t('modals.remove')}</Modal.Title>
         <Button
           variant="close"
           type="button"
           onClick={handleClose}
-          aria-label="Закрыть"
+          aria-label={t('modals.close')}
           data-bs-dismiss="modal"
         />
       </Modal.Header>
       <Modal.Body>
-        <p className="lead">Подтвердите удаление</p>
+        <p className="lead">{t('modals.confirm')}</p>
         <div className="d-flex justify-content-end">
           <Button
             className="me-2"
@@ -52,7 +54,7 @@ const RemoveChannel = ({ handleClose }) => {
             onClick={handleClose}
             disabled={loading}
           >
-            Закрыть
+            {t('modals.cancel')}
           </Button>
           <Button
             variant="danger"
@@ -60,7 +62,7 @@ const RemoveChannel = ({ handleClose }) => {
             onClick={handleRemove}
             disabled={loading}
           >
-            Подтвердить
+            {t('modals.submit')}
           </Button>
         </div>
       </Modal.Body>

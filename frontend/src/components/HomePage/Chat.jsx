@@ -7,6 +7,7 @@ import { animateScroll } from 'react-scroll';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
 import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import {
   selectCurrentChannel,
@@ -31,6 +32,7 @@ const Chat = () => {
   const validationSchema = object({
     body: string().trim().required(),
   });
+  const { t } = useTranslation();
 
   const formik = useFormik({
     initialValues: { body: '' },
@@ -48,9 +50,9 @@ const Chat = () => {
         resetForm();
       } catch (error) {
         if (!error.isAxiosError) {
-          console.log('Неизвестная ошибка');
+          console.log(t('errors.default'));
         } else {
-          console.log('Ошибка сети');
+          console.log(t('errors.network'));
         }
 
         throw error;
@@ -80,7 +82,9 @@ const Chat = () => {
           </b>
         </p>
         <span className="text-muted">
-          {`${messages.length} messages`}
+          {`${messages.length} ${t('chat.messageCount', {
+            count: messages.length,
+          })}`}
         </span>
       </div>
       <div id="messages-box" className="chat-messages overflow-auto px-5">
@@ -102,12 +106,12 @@ const Chat = () => {
             <Form.Control
               ref={input}
               name="body"
-              aria-label="Новое сообщение"
+              aria-label={t('chat.newMessage')}
               value={formik.values.body}
               className="border-0 p-0 ps-2"
               disabled={formik.isSubmitting}
               onChange={formik.handleChange}
-              placeholder="Введите сообщение"
+              placeholder={t('chat.inputMessage')}
             />
             <Button
               className="border-0"
@@ -116,7 +120,7 @@ const Chat = () => {
               disabled={isInvalid || formik.isSubmitting}
             >
               <ArrowRightSquare size={20} />
-              <span className="visually-hidden">Отправить</span>
+              <span className="visually-hidden">{t('chat.send')}</span>
             </Button>
           </InputGroup>
         </Form>

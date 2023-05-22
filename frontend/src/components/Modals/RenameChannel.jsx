@@ -5,6 +5,7 @@ import { object, string } from 'yup';
 import { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import { selectChannelsNames } from '../../selectors';
 import { selectors } from '../../slices';
@@ -18,6 +19,7 @@ const RenameChannel = ({ handleClose }) => {
   const channel = useSelector((state) => (
     selectors.channelsSelectors.selectById(state, channelId)
   ));
+  const { t } = useTranslation();
 
   const validationSchema = object({
     name: string()
@@ -41,9 +43,9 @@ const RenameChannel = ({ handleClose }) => {
         handleClose();
       } catch (error) {
         if (!error.isAxiosError) {
-          console.log('Неизвестная ошибка');
+          console.log(t('errors.default'));
         } else {
-          console.log('Ошибка сети');
+          console.log(t('errors.network'));
         }
 
         input.current.select();
@@ -59,12 +61,12 @@ const RenameChannel = ({ handleClose }) => {
   return (
     <>
       <Modal.Header>
-        <Modal.Title>Переименовать</Modal.Title>
+        <Modal.Title>{t('modals.rename')}</Modal.Title>
         <Button
           variant="close"
           type="button"
           onClick={handleClose}
-          aria-label="Закрыть"
+          aria-label={t('modals.close')}
           data-bs-dismiss="modal"
         />
       </Modal.Header>
@@ -79,9 +81,9 @@ const RenameChannel = ({ handleClose }) => {
               value={formik.values.name}
               isInvalid={formik.errors.name && formik.touched.name}
             />
-            <Form.Label visuallyHidden>Имя канала</Form.Label>
+            <Form.Label visuallyHidden>{t('modals.channelName')}</Form.Label>
             <Form.Control.Feedback type="invalid">
-              Имя недоступно
+              {t(formik.errors.name)}
             </Form.Control.Feedback>
             <div className="d-flex justify-content-end">
               <Button
@@ -90,14 +92,14 @@ const RenameChannel = ({ handleClose }) => {
                 type="button"
                 onClick={handleClose}
               >
-                Закрыть
+                {t('modals.cancel')}
               </Button>
               <Button
                 variant="primary"
                 type="submit"
                 disabled={formik.isSubmitting}
               >
-                Подтвердить
+                {t('modals.submit')}
               </Button>
             </div>
           </Form.Group>

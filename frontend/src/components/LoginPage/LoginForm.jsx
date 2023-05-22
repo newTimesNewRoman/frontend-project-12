@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../hooks';
 
 const LoginForm = () => {
@@ -13,6 +14,7 @@ const LoginForm = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [isInvalid, setIsInvalid] = useState(false);
+  const { t } = useTranslation();
 
   const validationSchema = object({
     password: string().trim().required(),
@@ -35,11 +37,11 @@ const LoginForm = () => {
         navigate('/');
       } catch (error) {
         if (!error.isAxiosError) {
-          console.log('Неизвестная ошибка');
+          console.log(t('errors.default'));
         } else if (error.response.status === 401) {
           setIsInvalid(true);
         } else {
-          console.log('Ошибка сети');
+          console.log(t('errors.network'));
         }
 
         input.current.select();
@@ -57,16 +59,16 @@ const LoginForm = () => {
       className="col-12 col-md-6 mt-3 mt-mb-0"
       onSubmit={formik.handleSubmit}
     >
-      <h1 className="text-center mb-4">Войти</h1>
+      <h1 className="text-center mb-4">{t('login.title')}</h1>
       <Form.FloatingLabel
         className="mb-3"
         controlId="username"
-        label="Логин"
+        label={t('login.username')}
       >
         <Form.Control
           name="username"
           autocomplete="username"
-          placeholder="Логин"
+          placeholder={t('login.username')}
           value={formik.values.username}
           isInvalid={isInvalid}
           onChange={formik.handleChange}
@@ -78,12 +80,12 @@ const LoginForm = () => {
       <Form.FloatingLabel
         className="mb-3"
         controlId="password"
-        label="Пароль"
+        label={t('login.password')}
       >
         <Form.Control
           name="password"
           autocomplete="current-password"
-          placeholder="Пароль"
+          placeholder={t('login.password')}
           type="password"
           value={formik.values.password}
           isInvalid={isInvalid}
@@ -93,7 +95,7 @@ const LoginForm = () => {
         />
         {isInvalid && (
           <Form.Control.Feedback type="invalid" tooltip>
-            login.auth
+            {t('errors.auth')}
           </Form.Control.Feedback>
         )}
       </Form.FloatingLabel>
@@ -103,7 +105,7 @@ const LoginForm = () => {
         type="submit"
         disabled={formik.isSubmitting}
       >
-        Войти
+        {t('login.submit')}
       </Button>
     </Form>
   );

@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { useAuth } from '../../hooks';
 
@@ -14,6 +15,7 @@ const SignupForm = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [signupFailed, setSignupFailed] = useState(false);
+  const { t } = useTranslation();
 
   const validationSchema = object({
     username: string()
@@ -53,11 +55,11 @@ const SignupForm = () => {
         navigate('/');
       } catch (error) {
         if (!error.isAxiosError) {
-          console.log('Неизветная ошибка');
+          console.log(t('errors.default'));
         } else if (error.response.status === 409) {
           setSignupFailed(true);
         } else {
-          console.log('Ошибка сети');
+          console.log(t('errors.network'));
         }
 
         input.current.select();
@@ -75,16 +77,16 @@ const SignupForm = () => {
       className="col-12 col-md-6 mt-3 mt-mb-0"
       onSubmit={formik.handleSubmit}
     >
-      <h1 className="text-center mb-4">Регистрация</h1>
+      <h1 className="text-center mb-4">{t('registration.title')}</h1>
       <Form.FloatingLabel
         className="mb-3"
         controlId="username"
-        label="Логин"
+        label={t('registration.username')}
       >
         <Form.Control
           name="username"
           autocomplete="username"
-          placeholder="Логин"
+          placeholder={t('registration.username')}
           value={formik.values.username}
           isInvalid={
             (formik.errors.username && formik.touched.username)
@@ -96,19 +98,19 @@ const SignupForm = () => {
           required
         />
         <Form.Control.Feedback type="invalid" tooltip>
-          Логин
+          {t(formik.errors.username)}
         </Form.Control.Feedback>
       </Form.FloatingLabel>
       <Form.FloatingLabel
         className="mb-3"
         controlId="password"
-        label="Пароль"
+        label={t('registration.password')}
       >
         <Form.Control
           type="password"
           name="password"
           autocomplete="new-password"
-          placeholder="Пароль"
+          placeholder={t('registration.password')}
           value={formik.values.password}
           isInvalid={
             (formik.errors.password && formik.touched.password)
@@ -119,19 +121,19 @@ const SignupForm = () => {
           required
         />
         <Form.Control.Feedback type="invalid" tooltip>
-          Пароль не подходит
+          {t(formik.errors.password)}
         </Form.Control.Feedback>
       </Form.FloatingLabel>
       <Form.FloatingLabel
         className="mb-3"
         controlId="confirmPassword"
-        label="Подтвердить"
+        label={t('registration.confirm')}
       >
         <Form.Control
           type="password"
           name="confirmPassword"
           autocomplete="new-password"
-          placeholder="Подтвердить"
+          placeholder={t('registration.confirm')}
           value={formik.values.confirmPassword}
           isInvalid={
             (formik.errors.confirmPassword
@@ -144,8 +146,8 @@ const SignupForm = () => {
         />
         <Form.Control.Feedback type="invalid" tooltip>
           {signupFailed
-            ? 'Такой аккаунт уже существует'
-            : 'Пароль не подходит'}
+            ? t('registration.exists')
+            : t(formik.errors.confirmPassword)}
         </Form.Control.Feedback>
       </Form.FloatingLabel>
       <Button
@@ -154,7 +156,7 @@ const SignupForm = () => {
         type="submit"
         disabled={formik.isSubmitting}
       >
-        Зарегистрироваться
+        {t('registration.submit')}
       </Button>
     </Form>
   );

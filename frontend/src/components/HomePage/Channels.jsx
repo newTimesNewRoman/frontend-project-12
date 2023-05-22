@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { animateScroll } from 'react-scroll';
 import { PlusSquare } from 'react-bootstrap-icons';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { actions, defaultChannelId, selectors } from '../../slices';
 
@@ -21,6 +22,7 @@ const Channel = ({
   handleRenameChannel,
 }) => {
   const variant = isCurrent ? 'secondary' : null;
+  const { t } = useTranslation();
 
   return (
     <Nav.Item key={channel.id} as="li">
@@ -37,14 +39,14 @@ const Channel = ({
             {channel.name}
           </Button>
           <Dropdown.Toggle className="flex-grow-0" variant={variant} split>
-            <span className="visually-hidden">Меню</span>
+            <span className="visually-hidden">{t('channels.edit')}</span>
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item onClick={handleRemoveChannel}>
-              Удалить
+              {t('channels.remove')}
             </Dropdown.Item>
             <Dropdown.Item onClick={handleRenameChannel}>
-              Переименовать
+              {t('channels.remove')}
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
@@ -69,6 +71,7 @@ const Channels = () => {
   const channels = useSelector(selectors.channelsSelectors.selectAll);
   const { currentChannelId } = useSelector((state) => state.channels);
   const lastChannelId = channels.at(-1)?.id;
+  const { t } = useTranslation();
 
   const handleChooseChannel = (channelId) => () => {
     dispatch(actions.setCurrentChannel({ channelId }));
@@ -110,7 +113,7 @@ const Channels = () => {
   return (
     <>
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
-        <b>Каналы</b>
+        <b>{t('channels.title')}</b>
         <Button
           className="p-0 text-primary"
           variant="group-vertical"
