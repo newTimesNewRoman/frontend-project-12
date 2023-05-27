@@ -1,5 +1,6 @@
 /* eslint-disable functional/no-conditional-statements */
 /* eslint-disable functional/no-expression-statements */
+import { ErrorBoundary, Provider as RollbarProvider } from '@rollbar/react';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
@@ -50,14 +51,25 @@ const init = async (socket) => {
     }));
   });
 
+  const rollbarConfig = {
+    accessToken: process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN,
+    captureUncaught: true,
+    captureUnhandledRejections: true,
+    environment: process.env.NODE_ENV,
+  };
+
   return (
-    <Provider store={store}>
-      <I18nextProvider i18n={i18nextInstance}>
-        <ApiContext.Provider value={api}>
-          <App />
-        </ApiContext.Provider>
-      </I18nextProvider>
-    </Provider>
+    <RollbarProvider config={rollbarConfig}>
+      <ErrorBoundary>
+        <Provider store={store}>
+          <I18nextProvider i18n={i18nextInstance}>
+            <ApiContext.Provider value={api}>
+              <App />
+            </ApiContext.Provider>
+          </I18nextProvider>
+        </Provider>
+      </ErrorBoundary>
+    </RollbarProvider>
   );
 };
 
