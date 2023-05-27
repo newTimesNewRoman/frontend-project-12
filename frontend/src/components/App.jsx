@@ -5,6 +5,7 @@ import {
   Routes,
 } from 'react-router-dom';
 import { useMemo, useState } from 'react';
+import { ToastContainer } from 'react-toastify';
 
 import HomePage from './HomePage';
 import NotFoundPage from './NotFoundPage';
@@ -55,6 +56,7 @@ const App = () => (
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
+      <ToastContainer />
     </BrowserRouter>
   </AuthProvider>
 );

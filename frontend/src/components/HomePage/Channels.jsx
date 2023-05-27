@@ -46,7 +46,7 @@ const Channel = ({
               {t('channels.remove')}
             </Dropdown.Item>
             <Dropdown.Item onClick={handleRenameChannel}>
-              {t('channels.remove')}
+              {t('channels.rename')}
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>

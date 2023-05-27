@@ -8,6 +8,7 @@ import { ArrowRightSquare } from 'react-bootstrap-icons';
 import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 import {
   selectCurrentChannel,
@@ -50,9 +51,9 @@ const Chat = () => {
         resetForm();
       } catch (error) {
         if (!error.isAxiosError) {
-          console.log(t('errors.default'));
+          toast.error(t('errors.default'));
         } else {
-          console.log(t('errors.network'));
+          toast.error(t('errors.network'));
         }
 
         throw error;

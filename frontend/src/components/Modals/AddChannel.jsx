@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 import { actions } from '../../slices';
 import { selectChannelsNames } from '../../selectors';
@@ -38,12 +39,13 @@ const AddChannel = ({ handleClose }) => {
         const { id } = await addChannel({ name });
 
         dispatch(actions.setCurrentChannel({ channelId: id }));
+        toast.success(t('channels.created'));
         handleClose();
       } catch (error) {
         if (!error.isAxiosError) {
-          console.log(t('errors.default'));
+          toast.error(t('errors.default'));
         } else {
-          console.log(t('errors.network'));
+          toast.error(t('errors.network'));
         }
 
         input.current.select();

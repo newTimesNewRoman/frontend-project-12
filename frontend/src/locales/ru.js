@@ -28,6 +28,9 @@ export default {
       remove: 'Удалить',
       rename: 'Переименовать',
       title: 'Каналы',
+      created: 'Канал создан',
+      removed: 'Канал удален',
+      renamed: 'Канал переименован',
     },
     login: {
       noAccount: 'Нет аккаунта?',

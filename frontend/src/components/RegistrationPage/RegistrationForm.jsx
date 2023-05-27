@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
+import { toast } from 'react-toastify';
 import { useAuth } from '../../hooks';
 
 const SignupForm = () => {
@@ -55,11 +55,11 @@ const SignupForm = () => {
         navigate('/');
       } catch (error) {
         if (!error.isAxiosError) {
-          console.log(t('errors.default'));
+          toast.error(t('errors.default'));
         } else if (error.response.status === 409) {
           setSignupFailed(true);
         } else {
-          console.log(t('errors.network'));
+          toast.error(t('errors.network'));
         }
 
         input.current.select();

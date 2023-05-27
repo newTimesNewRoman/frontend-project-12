@@ -6,6 +6,7 @@ import { StrictMode } from 'react';
 import init from './init';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 const app = async () => {
   const root = createRoot(document.getElementById('root'));

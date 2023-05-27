@@ -4,7 +4,7 @@ import { Button, Modal } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
+import { toast } from 'react-toastify';
 import { useApi } from '../../hooks';
 
 const RemoveChannel = ({ handleClose }) => {
@@ -18,13 +18,13 @@ const RemoveChannel = ({ handleClose }) => {
 
     try {
       await removeChannel({ id: channelId });
-
+      toast.success(t('channels.removed'));
       handleClose();
     } catch (error) {
       if (!error.isAxiosError) {
-        console.log('Неизвестная ошибка');
+        toast.error(t('errors.default'));
       } else {
-        console.log('Ошибка сети');
+        toast.error(t('errors.network'));
       }
 
       setLoading(false);

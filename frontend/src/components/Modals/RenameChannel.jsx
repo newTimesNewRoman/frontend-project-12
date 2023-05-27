@@ -6,7 +6,7 @@ import { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-
+import { toast } from 'react-toastify';
 import { selectChannelsNames } from '../../selectors';
 import { selectors } from '../../slices';
 import { useApi } from '../../hooks';
@@ -39,13 +39,13 @@ const RenameChannel = ({ handleClose }) => {
     onSubmit: async ({ name }) => {
       try {
         await renameChannel({ id: channelId, name });
-
+        toast.success(t('channels.renamed'));
         handleClose();
       } catch (error) {
         if (!error.isAxiosError) {
-          console.log(t('errors.default'));
+          toast.error(t('errors.default'));
         } else {
-          console.log(t('errors.network'));
+          toast.error(t('errors.network'));
         }
 
         input.current.select();

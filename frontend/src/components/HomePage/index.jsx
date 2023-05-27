@@ -1,3 +1,4 @@
+/* eslint-disable functional/no-conditional-statements */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable consistent-return */
 /* eslint-disable functional/no-expression-statements */
@@ -12,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 import Channels from './Channels';
 import Chat from './Chat';
@@ -39,7 +41,13 @@ const HomePage = () => {
         });
         dispatch(actions.setInitialState(data));
       } catch (error) {
-        console.log(t('errors.default'));
+        if (!error.isAxiosError) {
+          toast.error(t('errors.default'));
+        } else if (error.response.status === 401) {
+          logout();
+        } else {
+          toast.error(t('errors.network'));
+        }
         throw error;
       }
 
