@@ -9,6 +9,7 @@ import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import filter from 'leo-profanity';
 
 import {
   selectCurrentChannel,
@@ -30,6 +31,7 @@ const Chat = () => {
   const { sendMessage } = useApi();
   const channel = useSelector(selectCurrentChannel);
   const messages = useSelector(selectCurrentChannelMessages);
+  const ruDictionary = filter.getDictionary('ru');
   const validationSchema = object({
     body: string().trim().required(),
   });
@@ -63,6 +65,8 @@ const Chat = () => {
 
   const isInvalid = !formik.dirty || !formik.isValid;
 
+  filter.add(ruDictionary);
+
   useEffect(() => {
     input.current.focus();
     animateScroll.scrollToBottom({
@@ -93,7 +97,7 @@ const Chat = () => {
           <Message
             key={message.id}
             username={message.username}
-            body={message.body}
+            body={filter.clean(message.body)}
           />
         ))}
       </div>
