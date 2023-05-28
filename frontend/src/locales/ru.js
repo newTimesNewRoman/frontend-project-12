@@ -27,7 +27,7 @@ export default {
       messageCount_zero: 'сообщений',
     },
     channels: {
-      edit: 'Настройки',
+      edit: 'Управление каналом',
       remove: 'Удалить',
       rename: 'Переименовать',
       title: 'Каналы',
