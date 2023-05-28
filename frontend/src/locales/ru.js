@@ -57,9 +57,12 @@ export default {
       username: 'Имя пользователя',
       password: 'Пароль',
       confirm: 'Подтвердите пароль',
-      exists: 'Такой аккаунт уже существует',
+      exists: 'Такой пользователь уже существует',
       submit: 'Зарегистрироваться',
       title: 'Регистрация',
+      validationUsername: 'От 3 до 20 символов',
+      validationPassword: 'Не менее 6 символов',
+      validationMatch: 'Пароли должны совпадать',
     },
   },
 };

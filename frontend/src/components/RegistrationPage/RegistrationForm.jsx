@@ -1,13 +1,13 @@
 /* eslint-disable functional/no-conditional-statements */
 /* eslint-disable functional/no-expression-statements */
 import { Button, Form } from 'react-bootstrap';
-import { object, string } from 'yup';
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import * as yup from 'yup';
 import { useAuth } from '../../hooks';
 
 const SignupForm = () => {
@@ -17,21 +17,20 @@ const SignupForm = () => {
   const [signupFailed, setSignupFailed] = useState(false);
   const { t } = useTranslation();
 
-  const validationSchema = object({
-    username: string()
-      .trim()
+  const validationSchema = yup.object().shape({
+    username: yup
+      .string()
       .required()
-      .min(3)
-      .max(20),
-    password: string()
-      .trim()
+      .min(3, t('registration.validationUsername'))
+      .max(20, t('registration.validationUsername')),
+    password: yup
+      .string()
       .required()
-      .min(6),
-    confirmPassword: string().test(
-      'confirmPassword',
-      'signup.match',
-      (value, context) => value === context.parent.password,
-    ),
+      .min(6, t('registration.validationPassword')),
+    confirmPassword: yup
+      .string()
+      .required()
+      .oneOf([yup.ref('password'), null], t('registration.validationMatch')),
   });
 
   const formik = useFormik({
