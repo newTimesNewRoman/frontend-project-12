@@ -1,13 +1,16 @@
 export default {
   translation: {
-    title: 'Hexlet Chat',
+    navbar: {
+      title: 'Hexlet Chat',
+      logout: 'Выйти',
+    },
     notFound: {
       linkText: 'Вернуться на главную',
       message: 'Извините, указанная страница не найдена.',
       title: '404 Not Found',
     },
     errors: {
-      network: 'Ошибка сети',
+      network: 'Ошибка соединения',
       default: 'Что-то пошло не так',
       auth: 'Неверные имя пользователя или пароль',
     },
@@ -29,15 +32,15 @@ export default {
       rename: 'Переименовать',
       title: 'Каналы',
       created: 'Канал создан',
-      removed: 'Канал удален',
+      removed: 'Канал удалён',
       renamed: 'Канал переименован',
     },
     login: {
       noAccount: 'Нет аккаунта?',
-      registration: 'Зарегистрироваться',
+      registration: 'Регистрация',
       title: 'Войти',
-      username: 'Ваш логин',
-      password: 'Ваш пароль',
+      username: 'Ваш ник',
+      password: 'Пароль',
       submit: 'Войти',
     },
     modals: {
@@ -51,7 +54,7 @@ export default {
       rename: 'Переименовать канал',
     },
     registration: {
-      username: 'Логин',
+      username: 'Имя пользователя',
       password: 'Пароль',
       confirm: 'Подтвердите пароль',
       exists: 'Такой аккаунт уже существует',

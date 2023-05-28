@@ -11,11 +11,11 @@ const Navbar = () => {
     <NavBar className="shadow-sm" bg="white" expand="lg">
       <Container>
         <NavBar.Brand as={Link} to="/">
-          {t('title')}
+          {t('navbar.title')}
         </NavBar.Brand>
         {username && (
           <Button variant="primary" type="button" onClick={logout}>
-            Выйти
+            {t('navbar.logout')}
           </Button>
         )}
       </Container>
