@@ -1,7 +1,5 @@
-/* eslint-disable functional/no-conditional-statements */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable consistent-return */
-/* eslint-disable functional/no-expression-statements */
 import {
   Col,
   Container,
