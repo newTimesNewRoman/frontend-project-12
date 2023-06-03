@@ -7,7 +7,6 @@ import {
   Spinner,
 } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -22,16 +21,11 @@ import { useAuth } from '../../hooks';
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { getAuthHeader, logout, username } = useAuth();
+  const { getAuthHeader, logout } = useAuth();
   const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (!username) {
-      return navigate('/login');
-    }
-
     const fetchData = async () => {
       try {
         const { data } = await axios.get('/api/v1/data', {
@@ -53,7 +47,7 @@ const HomePage = () => {
     };
 
     fetchData();
-  }, [dispatch, getAuthHeader, logout, navigate, username]);
+  }, [dispatch, getAuthHeader, logout]);
 
   return loading ? (
     <div className="h-100 d-flex justify-content-center align-items-center">

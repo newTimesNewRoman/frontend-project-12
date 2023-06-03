@@ -4,11 +4,12 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useApi } from '../../hooks';
+import { selectors } from '../../slices';
 
 const RemoveChannel = ({ handleClose }) => {
   const { removeChannel } = useApi();
   const [loading, setLoading] = useState(false);
-  const { channelId } = useSelector((state) => state.modals.extra);
+  const { channelId } = useSelector(selectors.modalsSelectors.getExtra);
   const { t } = useTranslation();
 
   const handleRemove = async () => {

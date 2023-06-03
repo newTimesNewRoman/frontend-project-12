@@ -6,15 +6,14 @@ import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
-import { actions } from '../../slices';
-import { selectChannelsNames } from '../../selectors';
+import { actions, selectors } from '../../slices';
 import { useApi } from '../../hooks';
 
 const AddChannel = ({ handleClose }) => {
   const input = useRef();
   const dispatch = useDispatch();
   const { addChannel } = useApi();
-  const channels = useSelector(selectChannelsNames);
+  const channels = useSelector(selectors.channelsSelectors.getChannelNames);
   const { t } = useTranslation();
 
   const validationSchema = object({
@@ -23,7 +22,7 @@ const AddChannel = ({ handleClose }) => {
       .required()
       .min(3)
       .max(20)
-      .notOneOf(channels),
+      .notOneOf(channels, t('modals.unique')),
   });
 
   const formik = useFormik({

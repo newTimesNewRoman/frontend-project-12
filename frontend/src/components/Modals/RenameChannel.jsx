@@ -5,18 +5,15 @@ import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { selectChannelsNames } from '../../selectors';
 import { selectors } from '../../slices';
 import { useApi } from '../../hooks';
 
 const RenameChannel = ({ handleClose }) => {
   const input = useRef();
   const { renameChannel } = useApi();
-  const channels = useSelector(selectChannelsNames);
-  const { channelId } = useSelector((state) => state.modals.extra);
-  const channel = useSelector((state) => (
-    selectors.channelsSelectors.selectById(state, channelId)
-  ));
+  const channels = useSelector(selectors.channelsSelectors.getChannelNames);
+  const { channelId } = useSelector(selectors.modalsSelectors.getExtra);
+  const channel = useSelector(selectors.channelsSelectors.getCurrent);
   const { t } = useTranslation();
 
   const validationSchema = object({
@@ -25,7 +22,7 @@ const RenameChannel = ({ handleClose }) => {
       .required()
       .min(3)
       .max(20)
-      .notOneOf(channels),
+      .notOneOf(channels, t('modals.unique')),
   });
 
   const formik = useFormik({

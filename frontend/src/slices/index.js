@@ -2,14 +2,17 @@ import { combineReducers } from '@reduxjs/toolkit';
 
 import channels, {
   actions as channelsActions,
-  selectors as channelsSelectors,
+  channelsSelectors,
   defaultChannelId,
 } from './channels';
 import messages, {
   actions as messagesActions,
-  selectors as messagesSelectors,
+  messagesSelectors,
 } from './messages';
-import modals, { actions as modalsActions } from './modals';
+import modals, {
+  actions as modalsActions,
+  modalsSelectors,
+} from './modals';
 
 const actions = {
   ...channelsActions,
@@ -20,6 +23,7 @@ const actions = {
 const selectors = {
   channelsSelectors,
   messagesSelectors,
+  modalsSelectors,
 };
 
 export { actions, defaultChannelId, selectors };

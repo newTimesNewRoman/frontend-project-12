@@ -67,7 +67,7 @@ const Channel = ({
 const Channels = () => {
   const dispatch = useDispatch();
   const channels = useSelector(selectors.channelsSelectors.selectAll);
-  const { currentChannelId } = useSelector((state) => state.channels);
+  const currentChannelId = useSelector(selectors.channelsSelectors.getCurrentId);
   const lastChannelId = channels.at(-1)?.id;
   const { t } = useTranslation();
 
@@ -96,14 +96,14 @@ const Channels = () => {
       animateScroll.scrollToTop({
         containerId: 'channels-box',
         delay: 0,
-        duration: 0,
+        duration: 500,
       });
     }
     if (currentChannelId === lastChannelId) {
       animateScroll.scrollToBottom({
         containerId: 'channels-box',
         delay: 0,
-        duration: 0,
+        duration: 500,
       });
     }
   }, [currentChannelId, lastChannelId]);

@@ -28,9 +28,17 @@ const slice = createSlice({
   },
 });
 
-const selectors = adapter.getSelectors((state) => state.messages);
 const { actions } = slice;
+const selectors = adapter.getSelectors((state) => state.messages);
+const messagesSelectors = {
+  getAll: selectors.selectAll,
+  getCurrent: (state) => {
+    const { currentChannelId } = state.channels;
+    return selectors.selectAll(state)
+      .filter(({ channelId }) => channelId === currentChannelId);
+  },
+};
 
-export { actions, selectors };
+export { actions, messagesSelectors };
 
 export default slice.reducer;

@@ -2,7 +2,8 @@ import { ErrorBoundary, Provider as RollbarProvider } from '@rollbar/react';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
-
+import leoProfanity from 'leo-profanity';
+import AuthProvider from './contexts/AuthProvider';
 import App from './components/App';
 import i18nextInstance from './i18next';
 
@@ -56,13 +57,19 @@ const init = async (socket) => {
     environment: process.env.NODE_ENV,
   };
 
+  leoProfanity.loadDictionary();
+  const ruDictionary = leoProfanity.getDictionary('ru');
+  leoProfanity.add(ruDictionary);
+
   return (
     <RollbarProvider config={rollbarConfig}>
       <ErrorBoundary>
         <Provider store={store}>
           <I18nextProvider i18n={i18nextInstance}>
             <ApiContext.Provider value={api}>
-              <App />
+              <AuthProvider>
+                <App />
+              </AuthProvider>
             </ApiContext.Provider>
           </I18nextProvider>
         </Provider>

@@ -5,9 +5,9 @@ export default {
       logout: 'Выйти',
     },
     notFound: {
-      linkText: 'Вернуться на главную',
-      message: 'Извините, указанная страница не найдена.',
-      title: '404 Not Found',
+      linkText: 'на главную страницу',
+      message: 'Но вы можете перейти ',
+      title: 'Страница не найдена',
     },
     errors: {
       network: 'Ошибка соединения',
@@ -52,6 +52,7 @@ export default {
       remove: 'Удалить канал',
       confirm: 'Подтвердите удаление',
       rename: 'Переименовать канал',
+      unique: 'Должно быть уникальным',
     },
     registration: {
       username: 'Имя пользователя',
@@ -63,6 +64,8 @@ export default {
       validationUsername: 'От 3 до 20 символов',
       validationPassword: 'Не менее 6 символов',
       validationMatch: 'Пароли должны совпадать',
+      haveAccount: 'Есть аккаунт?',
+      login: 'Войти',
     },
   },
 };

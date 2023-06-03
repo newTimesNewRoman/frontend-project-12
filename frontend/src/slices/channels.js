@@ -33,9 +33,19 @@ const slice = createSlice({
   },
 });
 
-const selectors = adapter.getSelectors((state) => state.channels);
 const { actions } = slice;
+const selectors = adapter.getSelectors((state) => state.channels);
+const channelsSelectors = {
+  selectAll: selectors.selectAll,
+  getCurrent: (state) => {
+    const { currentChannelId } = state.channels;
+    return selectors.selectById(state, currentChannelId);
+  },
+  getCurrentId: (state) => state.channels.currentChannelId,
+  getChannelNames: (state) => selectors.selectAll(state)
+    .map((channel) => channel.name),
+};
 
-export { actions, defaultChannelId, selectors };
+export { actions, defaultChannelId, channelsSelectors };
 
 export default slice.reducer;

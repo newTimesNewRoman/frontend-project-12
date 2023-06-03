@@ -9,10 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import filter from 'leo-profanity';
 
-import {
-  selectCurrentChannel,
-  selectCurrentChannelMessages,
-} from '../../selectors';
+import { selectors } from '../../slices';
 import { useApi, useAuth } from '../../hooks';
 
 const Message = ({ username, body }) => (
@@ -27,9 +24,9 @@ const Chat = () => {
   const input = useRef();
   const { username } = useAuth();
   const { sendMessage } = useApi();
-  const channel = useSelector(selectCurrentChannel);
-  const messages = useSelector(selectCurrentChannelMessages);
-  const ruDictionary = filter.getDictionary('ru');
+  const channel = useSelector(selectors.channelsSelectors.getCurrent);
+  const messages = useSelector(selectors.messagesSelectors.getCurrent);
+  const lastMessageAuthor = messages.at(-1)?.username;
   const validationSchema = object({
     body: string().trim().required(),
   });
@@ -63,16 +60,16 @@ const Chat = () => {
 
   const isInvalid = !formik.dirty || !formik.isValid;
 
-  filter.add(ruDictionary);
-
   useEffect(() => {
     input.current.focus();
-    animateScroll.scrollToBottom({
-      containerId: 'messages-box',
-      delay: 0,
-      duration: 0,
-    });
-  }, [channel, messages.length]);
+    if (lastMessageAuthor === username) {
+      animateScroll.scrollToBottom({
+        containerId: 'messages-box',
+        delay: 0,
+        duration: 500,
+      });
+    }
+  }, [channel, lastMessageAuthor, messages.length, username]);
 
   return (
     <div className="d-flex flex-column h-100">

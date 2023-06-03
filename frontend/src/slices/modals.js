@@ -2,7 +2,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const slice = createSlice({
-  name: 'modal',
+  name: 'modals',
   initialState: {
     extra: null,
     isOpened: false,
@@ -23,6 +23,13 @@ const slice = createSlice({
     },
   },
 });
+
+export const modalsSelectors = {
+  getState: (state) => state.modals,
+  isOpened: (state) => state.modals.isOpened,
+  getType: (state) => state.modals.type,
+  getExtra: (state) => state.modals.extra,
+};
 
 export const { actions } = slice;
 

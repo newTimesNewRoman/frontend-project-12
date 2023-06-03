@@ -5,7 +5,7 @@ import AddChannel from './AddChannel';
 import RemoveChannel from './RemoveChannel';
 import RenameChannel from './RenameChannel';
 
-import { actions } from '../../slices';
+import { actions, selectors } from '../../slices';
 
 const mapping = {
   addChannel: AddChannel,
@@ -15,7 +15,7 @@ const mapping = {
 
 const Modal = () => {
   const dispatch = useDispatch();
-  const { isOpened, type } = useSelector((state) => state.modals);
+  const { isOpened, type } = useSelector(selectors.modalsSelectors.getState);
 
   const handleClose = () => {
     dispatch(actions.closeModal());
