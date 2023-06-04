@@ -2,7 +2,7 @@
 [![Actions Status](https://github.com/newTimesNewRoman/frontend-project-12/workflows/hexlet-check/badge.svg)](https://github.com/newTimesNewRoman/frontend-project-12/actions)
 
 <div align=center>
-    <img src="https://disk.yandex.ru/client/disk/Загрузки?idApp=client&dialog=slider&idDialog=%2Fdisk%2FЗагрузки%2F2023-06-04_19-10-19.png">
+    <img src="HexletChat.png">
 </div>
 
 ## Description
