@@ -10,7 +10,8 @@ import { toast } from 'react-toastify';
 import filter from 'leo-profanity';
 
 import { selectors } from '../../slices';
-import { useApi, useAuth } from '../../hooks';
+import { useAuth } from '../../contexts/Auth';
+import { useApi } from '../../contexts/Api';
 
 const Message = ({ username, body }) => (
   <div className="text-break mb-2">

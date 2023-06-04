@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { selectors } from '../../slices';
-import { useApi } from '../../hooks';
+import { useApi } from '../../contexts/Api';
 
 const RenameChannel = ({ handleClose }) => {
   const input = useRef();

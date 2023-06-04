@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { useAuth } from '../../hooks';
+import { useAuth } from '../../contexts/Auth';
 
 const LoginForm = () => {
   const input = useRef();

@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import { actions, selectors } from '../../slices';
-import { useApi } from '../../hooks';
+import { useApi } from '../../contexts/Api';
 
 const AddChannel = ({ handleClose }) => {
   const input = useRef();

@@ -3,12 +3,12 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import leoProfanity from 'leo-profanity';
-import AuthProvider from './contexts/AuthProvider';
+import { AuthProvider } from './contexts/Auth';
+import { ApiContext } from './contexts/Api';
 import App from './components/App';
 import i18nextInstance from './i18next';
 
 import reducer, { actions } from './slices';
-import { ApiContext } from './contexts';
 
 const init = async (socket) => {
   const withAcknowledgement = (event) => (args) => (

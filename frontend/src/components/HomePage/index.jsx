@@ -6,9 +6,9 @@ import {
   Row,
   Spinner,
 } from 'react-bootstrap';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
@@ -16,23 +16,21 @@ import Channels from './Channels';
 import Chat from './Chat';
 import Modals from '../Modals';
 
-import { actions } from '../../slices';
-import { useAuth } from '../../hooks';
+import { fetchData } from '../../slices/channels';
+import { useAuth } from '../../contexts/Auth';
 
 const HomePage = () => {
   const dispatch = useDispatch();
   const { getAuthHeader, logout } = useAuth();
-  const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
 
+  const loading = useSelector((state) => state.channels.loading);
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await axios.get('/api/v1/data', {
-          headers: getAuthHeader(),
-        });
-        dispatch(actions.setInitialState(data));
-      } catch (error) {
+    const authHeader = getAuthHeader();
+    dispatch(fetchData(authHeader))
+      .unwrap()
+      .catch((error) => {
         if (!error.isAxiosError) {
           toast.error(t('errors.default'));
         } else if (error.response.status === 401) {
@@ -40,13 +38,7 @@ const HomePage = () => {
         } else {
           toast.error(t('errors.network'));
         }
-        throw error;
-      }
-
-      setLoading(false);
-    };
-
-    fetchData();
+      });
   }, [dispatch, getAuthHeader, logout]);
 
   return loading ? (

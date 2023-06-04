@@ -6,7 +6,7 @@ import {
   Navigate,
 } from 'react-router-dom';
 import { ToastContainer, Slide } from 'react-toastify';
-import { useAuth } from '../hooks';
+import { useAuth } from '../contexts/Auth';
 import HomePage from './HomePage';
 import NotFoundPage from './NotFoundPage';
 import LoginPage from './LoginPage';

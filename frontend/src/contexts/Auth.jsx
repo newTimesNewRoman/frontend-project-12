@@ -1,5 +1,8 @@
-import { useMemo, useState } from 'react';
-import { AuthContext } from './index';
+import {
+  useMemo, useState, createContext, useContext,
+} from 'react';
+
+const AuthContext = createContext({});
 
 const AuthProvider = ({ children }) => {
   const userData = JSON.parse(localStorage.getItem('user'));
@@ -30,4 +33,6 @@ const AuthProvider = ({ children }) => {
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 };
 
-export default AuthProvider;
+const useAuth = () => useContext(AuthContext);
+
+export { AuthContext, AuthProvider, useAuth };
