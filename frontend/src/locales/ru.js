@@ -16,6 +16,7 @@ export default {
     },
     home: {
       loading: 'Загрузка',
+      refresh: 'Перезагрузить',
     },
     chat: {
       newMessage: 'Новое сообщение',

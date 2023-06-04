@@ -15,6 +15,7 @@ import { toast } from 'react-toastify';
 import Channels from './Channels';
 import Chat from './Chat';
 import Modals from '../Modals';
+import SomethingWrong from './SomethingWrong';
 
 import { fetchData } from '../../slices/channels';
 import { useAuth } from '../../contexts/Auth';
@@ -25,6 +26,7 @@ const HomePage = () => {
   const { t } = useTranslation();
 
   const loading = useSelector((state) => state.channels.loading);
+  const hasError = useSelector((state) => state.channels.hasError);
 
   useEffect(() => {
     const authHeader = getAuthHeader();
@@ -40,6 +42,12 @@ const HomePage = () => {
         }
       });
   }, [dispatch, getAuthHeader, logout]);
+
+  if (hasError) {
+    return (
+      <SomethingWrong />
+    );
+  }
 
   return loading ? (
     <div className="h-100 d-flex justify-content-center align-items-center">

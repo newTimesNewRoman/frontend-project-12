@@ -5,7 +5,10 @@ import axios from 'axios';
 const defaultChannelId = 1;
 
 const adapter = createEntityAdapter();
-const initialState = adapter.getInitialState({ currentChannelId: null });
+const initialState = adapter.getInitialState({
+  currentChannelId: null,
+  hasError: false,
+});
 
 export const fetchData = createAsyncThunk(
   'channels/fetchData',
@@ -49,12 +52,14 @@ const slice = createSlice({
       })
       .addCase(fetchData.fulfilled, (state, action) => {
         state.loading = false;
+        state.hasError = false;
         const { channels, currentChannelId } = action.payload;
         state.currentChannelId = currentChannelId;
         adapter.addMany(state, channels);
       })
       .addCase(fetchData.rejected, (state) => {
         state.loading = false;
+        state.hasError = true;
       });
   },
 });
