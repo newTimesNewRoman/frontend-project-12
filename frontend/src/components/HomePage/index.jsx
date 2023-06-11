@@ -17,6 +17,7 @@ import Chat from './Chat';
 import Modals from '../Modals';
 import SomethingWrong from './SomethingWrong';
 
+import { selectors } from '../../slices';
 import { fetchData } from '../../slices/channels';
 import { useAuth } from '../../contexts/Auth';
 
@@ -25,8 +26,8 @@ const HomePage = () => {
   const { getAuthHeader, logout } = useAuth();
   const { t } = useTranslation();
 
-  const loading = useSelector((state) => state.channels.loading);
-  const hasError = useSelector((state) => state.channels.hasError);
+  const loading = useSelector(selectors.channelsSelectors.isLoading);
+  const hasError = useSelector(selectors.channelsSelectors.hasError);
 
   useEffect(() => {
     const authHeader = getAuthHeader();

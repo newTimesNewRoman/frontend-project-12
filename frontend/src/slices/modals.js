@@ -11,8 +11,6 @@ const slice = createSlice({
   reducers: {
     closeModal: (state) => {
       state.isOpened = false;
-      state.type = null;
-      state.extra = null;
     },
     openModal: (state, { payload }) => {
       const { type, extra } = payload;

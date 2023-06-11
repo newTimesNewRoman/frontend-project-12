@@ -54,6 +54,7 @@ export default {
       confirm: 'Подтвердите удаление',
       rename: 'Переименовать канал',
       unique: 'Должно быть уникальным',
+      validationChannelName: 'От 3 до 20 символов',
     },
     registration: {
       username: 'Имя пользователя',

@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import { useAuth } from '../../contexts/Auth';
+import routes from '../../routes';
 
 const SignupForm = () => {
   const input = useRef();
@@ -19,16 +20,16 @@ const SignupForm = () => {
     username: yup
       .string()
       .required()
-      .min(3, t('registration.validationUsername'))
-      .max(20, t('registration.validationUsername')),
+      .min(3, 'registration.validationUsername')
+      .max(20, 'registration.validationUsername'),
     password: yup
       .string()
       .required()
-      .min(6, t('registration.validationPassword')),
+      .min(6, 'registration.validationPassword'),
     confirmPassword: yup
       .string()
       .required()
-      .oneOf([yup.ref('password'), null], t('registration.validationMatch')),
+      .oneOf([yup.ref('password'), null], 'registration.validationMatch'),
   });
 
   const formik = useFormik({
@@ -43,13 +44,13 @@ const SignupForm = () => {
       setSignupFailed(false);
 
       try {
-        const { data } = await axios.post('/api/v1/signup', {
+        const { data } = await axios.post(routes.registrationApi(), {
           password,
           username,
         });
 
         login(data);
-        navigate('/');
+        navigate(routes.homePage());
       } catch (error) {
         if (!error.isAxiosError) {
           toast.error(t('errors.default'));

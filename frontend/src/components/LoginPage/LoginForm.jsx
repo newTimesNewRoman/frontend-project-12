@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../contexts/Auth';
+import routes from '../../routes';
 
 const LoginForm = () => {
   const input = useRef();
@@ -31,9 +32,9 @@ const LoginForm = () => {
       setIsInvalid(false);
 
       try {
-        const { data } = await axios.post('/api/v1/login', values);
+        const { data } = await axios.post(routes.loginApi(), values);
         login(data);
-        navigate('/');
+        navigate(routes.homePage());
       } catch (error) {
         if (!error.isAxiosError) {
           toast.error(t('errors.default'));

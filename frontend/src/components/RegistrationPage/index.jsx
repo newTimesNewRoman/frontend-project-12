@@ -7,7 +7,9 @@ import {
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import routes from '../../routes';
 
+import registrationImg from '../../images/registration.jpg';
 import RegistrationForm from './RegistrationForm';
 
 const RegistrationPage = () => {
@@ -25,7 +27,7 @@ const RegistrationPage = () => {
                 md="6"
               >
                 <Image
-                  src="https://frontend-chat-ru.hexlet.app/static/media/avatar_1.6084447160acc893a24d.jpg"
+                  src={registrationImg}
                   alt="img"
                   roundedCircle
                 />
@@ -36,7 +38,7 @@ const RegistrationPage = () => {
               <div className="text-center">
                 <span>{t('registration.haveAccount')}</span>
                 {' '}
-                <Link to="/login">{t('registration.login')}</Link>
+                <Link to={routes.loginPage()}>{t('registration.login')}</Link>
               </div>
             </Card.Footer>
           </Card>

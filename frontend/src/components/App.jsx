@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import { ToastContainer, Slide } from 'react-toastify';
 import { useAuth } from '../contexts/Auth';
+import routes from '../routes';
 import HomePage from './HomePage';
 import NotFoundPage from './NotFoundPage';
 import LoginPage from './LoginPage';
@@ -20,7 +21,7 @@ const PrivateRoute = ({ children }) => {
     return children;
   }
   return (
-    <Navigate to="/login" state={{ from: navigate }} />
+    <Navigate to={routes.loginPage()} state={{ from: navigate }} />
   );
 };
 
@@ -29,7 +30,7 @@ const UnAuthRoute = ({ children }) => {
   const navigate = useNavigate();
   if (username) {
     return (
-      <Navigate to="/" state={{ from: navigate }} />
+      <Navigate to={routes.homePage()} state={{ from: navigate }} />
     );
   }
   return children;
@@ -40,9 +41,19 @@ const App = () => (
     <div className="d-flex flex-column h-100">
       <NavBar />
       <Routes>
-        <Route exact path="/" element={(<PrivateRoute><HomePage /></PrivateRoute>)} />
-        <Route path="/login" element={<UnAuthRoute><LoginPage /></UnAuthRoute>} />
-        <Route path="/signup" element={<UnAuthRoute><RegistrationPage /></UnAuthRoute>} />
+        <Route
+          exact
+          path={routes.homePage()}
+          element={(<PrivateRoute><HomePage /></PrivateRoute>)}
+        />
+        <Route
+          path={routes.loginPage()}
+          element={<UnAuthRoute><LoginPage /></UnAuthRoute>}
+        />
+        <Route
+          path={routes.registrationPage()}
+          element={<UnAuthRoute><RegistrationPage /></UnAuthRoute>}
+        />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </div>

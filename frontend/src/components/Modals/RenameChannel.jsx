@@ -20,9 +20,9 @@ const RenameChannel = ({ handleClose }) => {
     name: string()
       .trim()
       .required()
-      .min(3)
-      .max(20)
-      .notOneOf(channels, t('modals.unique')),
+      .min(3, 'modals.validationChannelName')
+      .max(20, 'modals.validationChannelName')
+      .notOneOf(channels, 'modals.unique'),
   });
 
   const formik = useFormik({

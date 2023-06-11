@@ -1,5 +1,5 @@
 import {
-  useMemo, useState, createContext, useContext,
+  useMemo, useState, createContext, useContext, useCallback,
 } from 'react';
 
 const AuthContext = createContext({});
@@ -7,11 +7,9 @@ const AuthContext = createContext({});
 const AuthProvider = ({ children }) => {
   const userData = JSON.parse(localStorage.getItem('user'));
   const [username, setUsername] = useState(userData?.username ?? null);
+  const userToken = userData?.token || null;
 
-  const getAuthHeader = () => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    return user ? { Authorization: `Bearer ${user.token}` } : {};
-  };
+  const getAuthHeader = useCallback(() => (userToken ? { Authorization: `Bearer ${userToken}` } : {}), [userToken]);
 
   const login = (user) => {
     localStorage.setItem('user', JSON.stringify(user));
@@ -28,7 +26,7 @@ const AuthProvider = ({ children }) => {
     login,
     logout,
     username,
-  }), [username]);
+  }), [getAuthHeader, username]);
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 };
