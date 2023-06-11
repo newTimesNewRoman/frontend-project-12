@@ -1,3 +1,4 @@
+/* eslint-disable functional/no-expression-statements */
 import { createRoot } from 'react-dom';
 import { io } from 'socket.io-client';
 import { StrictMode } from 'react';

@@ -1,3 +1,5 @@
+/* eslint-disable functional/no-conditional-statements */
+/* eslint-disable functional/no-expression-statements */
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { object, string } from 'yup';
 import { useEffect, useRef } from 'react';
