@@ -14,7 +14,7 @@ Also added a check for forbidden words in the chat.
 
 ## Installation and running
 ```
-git clone https://github.com/ArkadiyKonstantinov/frontend-project-12.git
+git clone https://github.com/newTimesNewRoman/frontend-project-12.git
 make install
 make start
 ```

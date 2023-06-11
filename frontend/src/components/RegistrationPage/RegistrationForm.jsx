@@ -1,5 +1,3 @@
-/* eslint-disable functional/no-conditional-statements */
-/* eslint-disable functional/no-expression-statements */
 import { Button, Form } from 'react-bootstrap';
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
