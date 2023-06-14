@@ -1,5 +1,3 @@
-/* eslint-disable functional/no-conditional-statements */
-/* eslint-disable functional/no-expression-statements */
 import { Button, Modal } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';

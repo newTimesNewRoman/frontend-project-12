@@ -1,4 +1,3 @@
-/* eslint-disable functional/no-expression-statements */
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 
 import { actions as channelsActions, fetchData } from './channels.js';

@@ -1,4 +1,3 @@
-/* eslint-disable functional/no-expression-statements */
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
