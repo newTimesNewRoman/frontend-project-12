@@ -1,3 +1,5 @@
+/* eslint-disable functional/no-conditional-statements */
+/* eslint-disable functional/no-expression-statements */
 import { Button, Form, Modal } from 'react-bootstrap';
 import { object, string } from 'yup';
 import { useEffect, useRef } from 'react';
@@ -37,7 +39,7 @@ const RenameChannel = ({ handleClose }) => {
         toast.success(t('channels.renamed'));
         handleClose();
       } catch (error) {
-        if (!error.isAxiosError) {
+        if (!error.name === 'AxiosError') {
           toast.error(t('errors.default'));
         } else {
           toast.error(t('errors.network'));

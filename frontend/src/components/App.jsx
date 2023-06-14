@@ -4,6 +4,7 @@ import {
   Routes,
   useNavigate,
   Navigate,
+  Outlet,
 } from 'react-router-dom';
 import { ToastContainer, Slide } from 'react-toastify';
 import { useAuth } from '../contexts/Auth';
@@ -14,25 +15,18 @@ import LoginPage from './LoginPage';
 import NavBar from './NavBar';
 import RegistrationPage from './RegistrationPage';
 
-const PrivateRoute = ({ children }) => {
+const RouteGuard = ({ children, requireAuth }) => {
   const { username } = useAuth();
   const navigate = useNavigate();
-  if (username) {
-    return children;
-  }
-  return (
-    <Navigate to={routes.loginPage()} state={{ from: navigate }} />
-  );
-};
 
-const UnAuthRoute = ({ children }) => {
-  const { username } = useAuth();
-  const navigate = useNavigate();
-  if (username) {
-    return (
-      <Navigate to={routes.homePage()} state={{ from: navigate }} />
-    );
+  if (requireAuth && !username) {
+    return <Navigate to={routes.loginPage()} state={{ from: navigate }} />;
   }
+
+  if (!requireAuth && username) {
+    return <Navigate to={routes.homePage()} state={{ from: navigate }} />;
+  }
+
   return children;
 };
 
@@ -41,20 +35,22 @@ const App = () => (
     <div className="d-flex flex-column h-100">
       <NavBar />
       <Routes>
-        <Route
-          exact
-          path={routes.homePage()}
-          element={(<PrivateRoute><HomePage /></PrivateRoute>)}
-        />
-        <Route
-          path={routes.loginPage()}
-          element={<UnAuthRoute><LoginPage /></UnAuthRoute>}
-        />
-        <Route
-          path={routes.registrationPage()}
-          element={<UnAuthRoute><RegistrationPage /></UnAuthRoute>}
-        />
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path="/" element={<Outlet />}>
+          <Route
+            exact
+            path={routes.homePage()}
+            element={<RouteGuard requireAuth><HomePage /></RouteGuard>}
+          />
+          <Route
+            path={routes.loginPage()}
+            element={<RouteGuard><LoginPage /></RouteGuard>}
+          />
+          <Route
+            path={routes.registrationPage()}
+            element={<RouteGuard><RegistrationPage /></RouteGuard>}
+          />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
       </Routes>
     </div>
     <ToastContainer

@@ -1,3 +1,5 @@
+/* eslint-disable functional/no-conditional-statements */
+/* eslint-disable functional/no-expression-statements */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable consistent-return */
 import {
@@ -34,9 +36,9 @@ const HomePage = () => {
     dispatch(fetchData(authHeader))
       .unwrap()
       .catch((error) => {
-        if (!error.isAxiosError) {
+        if (!error.name === 'AxiosError') {
           toast.error(t('errors.default'));
-        } else if (error.response.status === 401) {
+        } else if (error.message === 'Request failed with status code 401') {
           logout();
         } else {
           toast.error(t('errors.network'));

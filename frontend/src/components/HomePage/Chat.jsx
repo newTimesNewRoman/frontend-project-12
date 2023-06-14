@@ -1,3 +1,5 @@
+/* eslint-disable functional/no-conditional-statements */
+/* eslint-disable functional/no-expression-statements */
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { object, string } from 'yup';
 import { useEffect, useRef } from 'react';
@@ -48,7 +50,7 @@ const Chat = () => {
 
         resetForm();
       } catch (error) {
-        if (!error.isAxiosError) {
+        if (!error.name === 'AxiosError') {
           toast.error(t('errors.default'));
         } else {
           toast.error(t('errors.network'));

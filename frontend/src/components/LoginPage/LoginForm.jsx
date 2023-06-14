@@ -1,3 +1,5 @@
+/* eslint-disable functional/no-conditional-statements */
+/* eslint-disable functional/no-expression-statements */
 import { Button, Form } from 'react-bootstrap';
 import { object, string } from 'yup';
 import { useEffect, useRef, useState } from 'react';
@@ -8,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../contexts/Auth';
 import routes from '../../routes';
+import api from '../../api';
 
 const LoginForm = () => {
   const input = useRef();
@@ -32,11 +35,11 @@ const LoginForm = () => {
       setIsInvalid(false);
 
       try {
-        const { data } = await axios.post(routes.loginApi(), values);
+        const { data } = await axios.post(api.login(), values);
         login(data);
         navigate(routes.homePage());
       } catch (error) {
-        if (!error.isAxiosError) {
+        if (!error.name === 'AxiosError') {
           toast.error(t('errors.default'));
         } else if (error.response.status === 401) {
           setIsInvalid(true);

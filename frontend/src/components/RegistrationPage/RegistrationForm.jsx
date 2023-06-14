@@ -1,3 +1,5 @@
+/* eslint-disable functional/no-conditional-statements */
+/* eslint-disable functional/no-expression-statements */
 import { Button, Form } from 'react-bootstrap';
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
@@ -8,6 +10,7 @@ import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import { useAuth } from '../../contexts/Auth';
 import routes from '../../routes';
+import api from '../../api';
 
 const SignupForm = () => {
   const input = useRef();
@@ -44,7 +47,7 @@ const SignupForm = () => {
       setSignupFailed(false);
 
       try {
-        const { data } = await axios.post(routes.registrationApi(), {
+        const { data } = await axios.post(api.registration(), {
           password,
           username,
         });
@@ -52,7 +55,7 @@ const SignupForm = () => {
         login(data);
         navigate(routes.homePage());
       } catch (error) {
-        if (!error.isAxiosError) {
+        if (!error.name === 'AxiosError') {
           toast.error(t('errors.default'));
         } else if (error.response.status === 409) {
           setSignupFailed(true);

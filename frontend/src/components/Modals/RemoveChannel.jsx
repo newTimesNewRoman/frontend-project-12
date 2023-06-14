@@ -1,3 +1,5 @@
+/* eslint-disable functional/no-conditional-statements */
+/* eslint-disable functional/no-expression-statements */
 import { Button, Modal } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
@@ -20,7 +22,7 @@ const RemoveChannel = ({ handleClose }) => {
       toast.success(t('channels.removed'));
       handleClose();
     } catch (error) {
-      if (!error.isAxiosError) {
+      if (!error.name === 'AxiosError') {
         toast.error(t('errors.default'));
       } else {
         toast.error(t('errors.network'));
